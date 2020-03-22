@@ -47,7 +47,7 @@ function App() {
           <img src={logo} className="logoImage" alt="logo"></img>
         </div>
         <nav id="navigation">
-          <a href="">zimmer eröffnen</a> 
+          <a href="">Zimmer eröffnen</a> 
           <a href="">FAQ</a>
         </nav>
       </header>

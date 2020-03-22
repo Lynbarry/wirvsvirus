@@ -4,6 +4,7 @@ import { Button, Typography, Link } from "@material-ui/core";
 import AccessTimeOutlinedIcon from "@material-ui/icons/AccessTimeOutlined";
 import PeopleOutlinedIcon from "@material-ui/icons/PeopleOutlined";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
+import CostOutlinedIcon from "@material-ui/icons/ShoppingCartRounded";
 
 import "./Listing.css";
 
@@ -60,6 +61,13 @@ export function Listing({ setListing, ...props }) {
           />
           {props.participantCount}
         </Typography>
+        <Typography className="listingProperty">
+          <CostOutlinedIcon
+            fontSize="small"
+            className="listingProperty--icon"
+          />
+          kostenlos
+        </Typography>
       </div>
       <div className="listingParticipate listingBlock">
         <Button
@@ -99,7 +107,7 @@ export function Listing({ setListing, ...props }) {
           </a>
         </div>
       </div>
-      <button onClick={() => setListing(undefined)}>reroll</button>
+      <button className="rerollButton" onClick={() => setListing(undefined)}>Zeig mir ein anders Zimmer</button>
     </div>
   );
 }

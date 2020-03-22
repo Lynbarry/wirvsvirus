@@ -7,7 +7,7 @@ import axios from "axios";
 
 const decisionData = [
   {
-    subline: "Um dich zuzuordnen hier vier Fragen:",
+    subline: "Um dich zuzuordnen, hier vier Fragen:",
     question: "Kopf oder Bauch",
     answerOne: "Kopf",
     answerTwo: "Bauch",
