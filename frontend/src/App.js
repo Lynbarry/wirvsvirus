@@ -9,10 +9,12 @@ import logo from "./assets/img/logo.png";
 function App() {
   return (
     <Router>
-      <main className="content">
+      <header class="header">
         <div className="logo">
           <img src={logo} className="logoImage" alt="logo"></img>
         </div>
+      </header>
+      <main className="content">
         <Switch>
           <Route path="/listing/:id">
             <Listing />
