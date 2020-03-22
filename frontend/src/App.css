@@ -24,3 +24,15 @@
 .logoImage {
   width: 710px;
 }
+
+#navigation {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 20px;
+}
+
+#navigation a {
+  color: #1890FF;
+  margin-left: 20px;
+}

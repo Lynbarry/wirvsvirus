@@ -15,6 +15,10 @@ function App() {
         <div className="logo">
           <img src={logo} className="logoImage" alt="logo"></img>
         </div>
+        <nav id="navigation">
+          <a href="">zimmer eröffnen</a> 
+          <a href="">FAQ</a>
+        </nav>
       </header>
       <main className="content">
         <Switch>
