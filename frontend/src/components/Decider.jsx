@@ -18,10 +18,10 @@ const decisionData = [
     decisionKey: "helldunkel"
   },
   {
-    question: "Groß oder Klein",
-    answerOne: "Groß",
+    question: "Gross oder Klein",
+    answerOne: "Gross",
     answerTwo: "Klein",
-    decisionKey: "großklein"
+    decisionKey: "grossklein"
   },
   {
     question: "Laut oder Leise",
@@ -46,7 +46,7 @@ export function Decider({ decisions, setDecision, ...props }) {
           withCredentials: false,
           responseType: "json"
         })
-        .then(res => console.log(res))
+        .then(res => console.log(`Got:`, res))
         .catch(err => console.error(err));
 
       //return <Redirect to={{ pathname: "/listing/123" }} />;

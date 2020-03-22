@@ -53,8 +53,11 @@ csv({ output: "csv" })
     {"light":"Hell","body":"Kopf","size":"Klein","noise":"Leise","clean":"Sauber","speed":"Langsam"}
     */
     app.post("/listing", (req, res) => {
-      console.log(`Got: `, req.body);
-      const fittingListings = getFittingListing(cleanedListings, req.body);
+      const convertedSelection = convertSelection(req.body);
+      const fittingListings = getFittingListing(
+        cleanedListings,
+        convertedSelection
+      );
       res.json(fittingListings);
     });
 
@@ -63,16 +66,40 @@ csv({ output: "csv" })
     );
   });
 
+/*
+  Takes data in the form of:
+  {
+    kopfbauch: 'Kopf',
+    helldunkel: 'Hell',
+    grossklein: 'Klein',
+    lautleise: 'Leise'
+  }
+  and converts it to what we need
+  */
+function convertSelection(selection) {
+  return {
+    light: selection.helldunkel,
+    body: selection.kopfbauch,
+    size: selection.grossklein,
+    noise: selection.lautleise
+  };
+}
+
 function getFittingListing(listings, input) {
   const fittingListings = listings.filter(listing => {
-    return (
-      listing.categories.light === input.light &&
-      listing.categories.body === input.body &&
-      listing.categories.size === input.size &&
-      listing.categories.noise === input.noise &&
-      listing.categories.clean === input.clean &&
-      listing.categories.speed === input.speed
-    );
+    return input.light
+      ? listing.categories.light === input.light
+      : true && input.body
+      ? listing.categories.body === input.body
+      : true && input.size
+      ? listing.categories.size === input.size
+      : true && input.noise
+      ? listing.categories.noise === input.noise
+      : true && input.clean
+      ? listing.categories.clean === input.clean
+      : true && input.speed
+      ? listing.categories.speed === input.speed
+      : true;
   });
 
   const randomFittingListing =
