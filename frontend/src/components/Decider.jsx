@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Typography } from "@material-ui/core";
 import "./Decider.css";
-import { Redirect } from "react-router-dom";
+import { Listing } from "./Listing";
 import axios from "axios";
 
 const decisionData = [
@@ -35,8 +35,18 @@ const decisionData = [
   }
 ];
 
-export function Decider({ decisions, setDecision, ...props }) {
+export function Decider({
+  decisions,
+  setDecision,
+  listing,
+  setListing,
+  ...props
+}) {
   const [step, setStep] = useState(-1);
+
+  if (listing) {
+    return <Listing {...listing} />;
+  }
 
   switch (step) {
     case -1:
@@ -44,13 +54,16 @@ export function Decider({ decisions, setDecision, ...props }) {
     case decisionData.length:
       // User has gone through the whole decision process
       // Here we would need to talk to a backend to find out which listing we should go to based on the selection
+      setStep(-1);
       axios
         .post("http://localhost:3001/listing", decisions, {
           headers: { "Content-Type": "application/json" },
           withCredentials: false,
           responseType: "json"
         })
-        .then(res => console.log(`Got:`, res))
+        .then(res => {
+          setListing(res.data);
+        })
         .catch(err => console.error(err));
 
       //return <Redirect to={{ pathname: "/listing/123" }} />;

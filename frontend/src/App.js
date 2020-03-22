@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import "typeface-roboto";
@@ -7,6 +7,8 @@ import { Listing } from "./components/Listing";
 import logo from "./assets/img/logo.png";
 
 function App() {
+  const [listing, setListing] = useState(null);
+
   return (
     <Router>
       <header className="header">
@@ -20,7 +22,11 @@ function App() {
             <Listing />
           </Route>
           <Route path="/">
-            <DummyHouse />
+            {listing ? (
+              <Listing {...listing} />
+            ) : (
+              <DummyHouse listing={listing} setListing={setListing} />
+            )}
           </Route>
         </Switch>
       </main>

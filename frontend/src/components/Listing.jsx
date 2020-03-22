@@ -7,13 +7,38 @@ import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 
 import "./Listing.css";
 
-export function Listing() {
+/*
+{
+  created: row[0],
+  title: row[1],
+  abstract: row[2],
+  date: row[3],
+  time: row[4],
+  duration: row[5],
+  level: row[6],
+  participantCount: row[7],
+  broadcast: row[8],
+  name: row[9],
+  email: row[10],
+  cost: row[11],
+  categories: {
+    light: row[12],
+    body: row[13],
+    size: row[14],
+    noise: row[15],
+    clean: row[16],
+    speed: row[17]
+  }
+}
+*/
+
+export function Listing(props) {
   const id = useParams();
   console.log(id);
   return (
     <div className="listingContainer">
       <div className="listingBlock">
-        <Typography variant="h3">Zumba tanzen im Zimmer von Ole</Typography>
+        <Typography variant="h3">{props.title}</Typography>
         <Typography variant="subtitle1" gutterBottom>
           Interaktiver Stream
         </Typography>
@@ -24,14 +49,14 @@ export function Listing() {
             fontSize="small"
             className="listingProperty--icon"
           />
-          Heute, 16:00 - 18:00
+          {props.date}, {props.time}
         </Typography>
         <Typography className="listingProperty">
           <PeopleOutlinedIcon
             fontSize="small"
             className="listingProperty--icon"
           />
-          5 - 10 Leute
+          {props.participantCount}
         </Typography>
       </div>
       <div className="listingParticipate listingBlock">
@@ -42,16 +67,13 @@ export function Listing() {
           className="listingButton"
           startIcon={<HomeOutlinedIcon />}
         >
-          Mitmachen
+          {props.broadcast}
         </Button>
         <Link href="/faq">Wie funktioniert das?</Link>
       </div>
       <div className="listingDescription">
         <Typography variant="body1" gutterBottom>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-          blanditiis tenetur unde suscipit, quam beatae rerum inventore
-          consectetur, neque doloribus, cupiditate numquam dignissimos laborum
-          fugiat deleniti? Eum quasi quidem quibusdam.
+          {props.abstract}
         </Typography>
       </div>
     </div>
