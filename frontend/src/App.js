@@ -4,7 +4,7 @@ import "./App.css";
 import "typeface-roboto";
 import { DummyHouse } from "./components/DummyHouse";
 import { Listing } from "./components/Listing";
-import logo from "./assets/img/logo.png";
+import logo from "./assets/img/logo.svg";
 
 function App() {
   const [listing, setListing] = useState(null);
@@ -18,9 +18,6 @@ function App() {
       </header>
       <main className="content">
         <Switch>
-          <Route path="/listing/:id">
-            <Listing />
-          </Route>
           <Route path="/">
             {listing ? (
               <Listing {...listing} />

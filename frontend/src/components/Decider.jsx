@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Typography } from "@material-ui/core";
 import "./Decider.css";
 import { Listing } from "./Listing";
+import { ExampleActivities } from "./ExampleActivities";
 import axios from "axios";
 
 const decisionData = [
@@ -67,7 +68,7 @@ export function Decider({
         .catch(err => console.error(err));
 
       //return <Redirect to={{ pathname: "/listing/123" }} />;
-      return <div>Loading</div>;
+      return <div>Loading...</div>;
     default:
       return (
         <DeciderButtons
@@ -83,9 +84,12 @@ export function Decider({
 
 function Initiator({ setStep, ...props }) {
   return (
+    <>
+    <ExampleActivities />
     <button className="startButton" onClick={() => setStep(0)}>
       Zeig mir ein Zimmer
     </button>
+    </>
   );
 }
 
