@@ -15,9 +15,12 @@ export function DummyHouse() {
         decisions={decisions}
         setDecision={setDecision}
       />
-      {decisions.kopfbauch === "Bauch" && (
-        <div className="overlay" id="room1"></div>
-      )}
+
+      <div
+        className={`overlay ${decisions.kopfbauch === "Bauch" ? "active" : ""}`}
+        id="room1"
+      ></div>
+
       <div className="overlay" id="room2"></div>
       <div className="overlay" id="room3"></div>
       <div className="overlay" id="room4"></div>
