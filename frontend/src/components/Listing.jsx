@@ -32,15 +32,17 @@ import "./Listing.css";
 }
 */
 
-export function Listing(props) {
+export function Listing({ setListing, ...props }) {
   const id = useParams();
   console.log(id);
   return (
     <div className="listingContainer">
       <div className="listingBlock">
-        <Typography variant="h3">{props.title}</Typography>
+        <Typography variant="h3">
+          {props.title} von {props.name}
+        </Typography>
         <Typography variant="subtitle1" gutterBottom>
-          Interaktiver Stream
+          {props.level}
         </Typography>
       </div>
       <div className="listingBlock">
@@ -49,7 +51,7 @@ export function Listing(props) {
             fontSize="small"
             className="listingProperty--icon"
           />
-          {props.date}, {props.time}
+          {props.date}, {props.time}, Dauer: {props.duration}
         </Typography>
         <Typography className="listingProperty">
           <PeopleOutlinedIcon
@@ -67,15 +69,37 @@ export function Listing(props) {
           className="listingButton"
           startIcon={<HomeOutlinedIcon />}
         >
-          {props.broadcast}
+          Mitmachen
         </Button>
         <Link href="/faq">Wie funktioniert das?</Link>
       </div>
       <div className="listingDescription">
         <Typography variant="body1" gutterBottom>
-          {props.abstract}
+          <div>{props.abstract}</div>
+          <p>Stream-Info:</p>
+          <div>{props.broadcast}</div>
         </Typography>
       </div>
+      <div className="listing--further">
+        <p className="listing--further-heading">Über Zusammen im Zimmer</p>
+        <p className="listing--further-text">
+          Zusammen im Zimmer ist ein Verzeichnis, in dem Ihr während der Zeit
+          von Ausgangsbeschränkungen und Quarantäne soziale Aktivitäten finden
+          könnt.
+        </p>
+        <div>
+          <a className="listing--further-link" href="#">
+            Missbrauch melden
+          </a>
+          <a className="listing--further-link" href="#">
+            Zimmer eröffnen (Stream anbieten)
+          </a>
+          <a className="listing--further-link" href="#">
+            Hilfe
+          </a>
+        </div>
+      </div>
+      <button onClick={() => setListing(undefined)}>reroll</button>
     </div>
   );
 }

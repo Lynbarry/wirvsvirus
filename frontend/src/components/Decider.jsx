@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import "./Decider.css";
 import { Listing } from "./Listing";
 import { ExampleActivities } from "./ExampleActivities";
@@ -94,7 +94,9 @@ function Initiator({ setStep, ...props }) {
 }
 
 function DeciderButtons({ step, setDecision, decisions, setStep, ...props }) {
-  const { subline, question, answerOne, answerTwo, decisionKey } = decisionData[step];
+  const { subline, question, answerOne, answerTwo, decisionKey } = decisionData[
+    step
+  ];
 
   return (
     <div className="deciderButtons" {...props}>
@@ -108,21 +110,19 @@ function DeciderButtons({ step, setDecision, decisions, setStep, ...props }) {
       </div>
       <div className="deciderAnswers">
         <div
-          className= {answerOne}
+          className={answerOne}
           onClick={() => {
             setDecision({ ...decisions, [decisionKey]: answerOne });
             setStep(step + 1);
           }}
-        >
-        </div>
+        ></div>
         <div
-          className= {answerTwo}
+          className={answerTwo}
           onClick={() => {
             setDecision({ ...decisions, [decisionKey]: answerTwo });
             setStep(step + 1);
           }}
-        >
-        </div>
+        ></div>
       </div>
     </div>
   );

@@ -25,3 +25,21 @@
 .listingButton {
   margin: 10px;
 }
+
+.listing--further {
+  color: grey;
+  font-size: 12px;
+}
+
+.listing--further-heading {
+  font-weight: bold;
+  margin: 50px 0 0 0;
+}
+
+.listing--further-text {
+  margin: 0 0 20px 0;
+}
+
+.listing--further-link {
+  margin-right: 50px;
+}
