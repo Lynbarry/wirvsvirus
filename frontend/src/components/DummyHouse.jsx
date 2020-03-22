@@ -10,7 +10,6 @@ export function DummyHouse() {
   return (
     <div id="testHouse">
       <Decider
-        className="decider"
         decisions={decisions}
         setDecision={setDecision}
       />

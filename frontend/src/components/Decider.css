@@ -98,7 +98,7 @@
   background-image: url("../assets/img/Hell.png");
 }
 
-.deciderAnswers div:first-child.Groß:before {
+.deciderAnswers div:first-child.Gross:before {
   background-image: url("../assets/img/Groß.png");
 }
 

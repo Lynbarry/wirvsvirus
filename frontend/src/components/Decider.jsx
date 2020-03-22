@@ -6,24 +6,28 @@ import axios from "axios";
 
 const decisionData = [
   {
+    subline: "Um dich zuzuordnen hier vier Fragen:",
     question: "Kopf oder Bauch",
     answerOne: "Kopf",
     answerTwo: "Bauch",
     decisionKey: "kopfbauch"
   },
   {
+    subline: "Frage zwei von vier:",
     question: "Hell oder Dunkel",
     answerOne: "Hell",
     answerTwo: "Dunkel",
     decisionKey: "helldunkel"
   },
   {
+    subline: "Frage drei von vier:",
     question: "Gross oder Klein",
     answerOne: "Gross",
     answerTwo: "Klein",
     decisionKey: "grossklein"
   },
   {
+    subline: "Letzte Frage:",
     question: "Laut oder Leise",
     answerOne: "Laut",
     answerTwo: "Leise",
@@ -73,36 +77,35 @@ function Initiator({ setStep, ...props }) {
 }
 
 function DeciderButtons({ step, setDecision, decisions, setStep, ...props }) {
-  const { question, answerOne, answerTwo, decisionKey } = decisionData[step];
+  const { subline, question, answerOne, answerTwo, decisionKey } = decisionData[step];
 
   return (
     <div className="deciderButtons" {...props}>
       <div className="deciderQuestion">
+        <Typography variant="h5" component="h5">
+          {subline}
+        </Typography>
         <Typography variant="h4" component="h4">
           {question.toUpperCase()}?
         </Typography>
       </div>
       <div className="deciderAnswers">
-        <Button
-          variant="contained"
-          color="primary"
+        <div
+          className= {answerOne}
           onClick={() => {
             setDecision({ ...decisions, [decisionKey]: answerOne });
             setStep(step + 1);
           }}
         >
-          {answerOne}
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
+        </div>
+        <div
+          className= {answerTwo}
           onClick={() => {
             setDecision({ ...decisions, [decisionKey]: answerTwo });
             setStep(step + 1);
           }}
         >
-          {answerTwo}
-        </Button>
+        </div>
       </div>
     </div>
   );
