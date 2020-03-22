@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./DummyHouse.css";
 
 import { Decider } from "./Decider";
-import { ExampleActivities } from "./ExampleActivities";
 
 export function DummyHouse() {
   const [decisions, setDecision] = useState({});
@@ -10,9 +9,6 @@ export function DummyHouse() {
 
   return (
     <div id="testHouse">
-      <ExampleActivities 
-        className="welcomeText"
-      />
       <Decider
         className="decider"
         decisions={decisions}
