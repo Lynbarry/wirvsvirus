@@ -1,0 +1,27 @@
+.listingContainer {
+  width: 1000px;
+  margin: auto;
+}
+
+.listingBlock {
+  margin-bottom: 50px;
+}
+
+.listingProperty {
+  display: flex;
+}
+
+.listingProperty--icon {
+  margin-right: 10px;
+}
+
+.listingParticipate {
+  width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.listingButton {
+  margin: 10px;
+}
