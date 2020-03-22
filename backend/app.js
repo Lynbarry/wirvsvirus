@@ -1,9 +1,10 @@
 const express = require("express");
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const csv = require("csvtojson");
+const cors = require("cors");
 const csvFilePath = "listings.csv";
 const app = express();
-const port = 3000;
+const port = 3001;
 
 csv({ output: "csv" })
   .fromFile(csvFilePath)
@@ -35,6 +36,7 @@ csv({ output: "csv" })
   })
   .then(cleanedListings => {
     app.use(bodyParser.json());
+    app.use(cors());
     app.get("/", (req, res) => res.send("Hello World!"));
 
     /* 
@@ -51,6 +53,7 @@ csv({ output: "csv" })
     {"light":"Hell","body":"Kopf","size":"Klein","noise":"Leise","clean":"Sauber","speed":"Langsam"}
     */
     app.post("/listing", (req, res) => {
+      console.log(`Got: `, req.body);
       const fittingListings = getFittingListing(cleanedListings, req.body);
       res.json(fittingListings);
     });
