@@ -56,15 +56,12 @@ export function Decider({ decisions, setDecision, ...props }) {
 
 function Initiator({ setStep, ...props }) {
   return (
-    <Button
-      size="large"
-      variant="contained"
-      color="primary"
+    <button
+      className="startButton"
       onClick={() => setStep(0)}
-      {...props}
     >
       Zeig mir ein Zimmer
-    </Button>
+    </button>
   );
 }
 

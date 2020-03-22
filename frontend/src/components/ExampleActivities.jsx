@@ -3,10 +3,10 @@ import "./ExampleActivities.css";
 import { Typography } from "@material-ui/core";
 
 const exampleActivities = [
-  "Stricken lernen",
-  "Tomaten pflanzen",
-  "Zumba tanzen",
-  "Nudeln machen"
+  "zusammen Stricken lernen",
+  "gemeinsam Tomaten pflanzen",
+  "mit anderen Zumba tanzen",
+  "als Gruppe Nudeln machen"
 ];
 
 export function ExampleActivities() {
@@ -27,7 +27,8 @@ export function ExampleActivities() {
   return (
     <div className="exampleActivities">
       <Typography variant="h5" gutterBottom>
-        {exampleActivities[activity]}
+      In Quarantäne soziale Aktivitäten finden<br />
+      Zum Beispiel: <strong>{exampleActivities[activity]}</strong>
       </Typography>
     </div>
   );

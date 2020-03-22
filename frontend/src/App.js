@@ -9,7 +9,7 @@ import logo from "./assets/img/logo.png";
 function App() {
   return (
     <Router>
-      <header class="header">
+      <header className="header">
         <div className="logo">
           <img src={logo} className="logoImage" alt="logo"></img>
         </div>
