@@ -4,7 +4,7 @@ const cors = require("cors");
 const { google } = require("googleapis");
 
 const app = express();
-const port = process.env.port || 3001;
+const port = process.env.PORT || 3001;
 
 const sheets = google.sheets("v4");
 
