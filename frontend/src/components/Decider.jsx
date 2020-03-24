@@ -57,7 +57,7 @@ export function Decider({
       // Here we would need to talk to a backend to find out which listing we should go to based on the selection
       setStep(-1);
       axios
-        .post("http://localhost:3001/listing", decisions, {
+        .post("https://zusammenimzimmer.herokuapp.com/listing", decisions, {
           headers: { "Content-Type": "application/json" },
           withCredentials: false,
           responseType: "json"
@@ -85,10 +85,10 @@ export function Decider({
 function Initiator({ setStep, ...props }) {
   return (
     <>
-    <ExampleActivities />
-    <button className="startButton" onClick={() => setStep(0)}>
-      Zeig mir ein Zimmer
-    </button>
+      <ExampleActivities />
+      <button className="startButton" onClick={() => setStep(0)}>
+        Zeig mir ein Zimmer
+      </button>
     </>
   );
 }
