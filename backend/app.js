@@ -1,18 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const csv = require("csvtojson");
 const cors = require("cors");
-const csvFilePath = "listings.csv";
-const app = express();
-const port = 3001;
 const { google } = require("googleapis");
 
+const app = express();
+const port = process.env.port || 3001;
+
 const sheets = google.sheets("v4");
+
+const spreadsheetId = "1Kyb0LPvplFFeT5vNmcs1GIfuEmrAqDR4fLDK4R2BkI4";
 
 sheets.spreadsheets.values
   .get({
     auth: process.env.GOOGLE_SHEET_API_KEY,
-    spreadsheetId: "1Kyb0LPvplFFeT5vNmcs1GIfuEmrAqDR4fLDK4R2BkI4",
+    spreadsheetId,
     range: "A1:R100"
   })
   .then(res => {
