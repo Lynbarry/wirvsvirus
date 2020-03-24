@@ -5,11 +5,19 @@ const cors = require("cors");
 const csvFilePath = "listings.csv";
 const app = express();
 const port = 3001;
+const { google } = require("googleapis");
 
-csv({ output: "csv" })
-  .fromFile(csvFilePath)
-  .then(csvRows => {
-    return csvRows.map(row => {
+const sheets = google.sheets("v4");
+
+sheets.spreadsheets.values
+  .get({
+    auth: process.env.GOOGLE_SHEET_API_KEY,
+    spreadsheetId: "1Kyb0LPvplFFeT5vNmcs1GIfuEmrAqDR4fLDK4R2BkI4",
+    range: "A1:R100"
+  })
+  .then(res => {
+    const dataWithoutFirstRow = res.data.values.slice(1);
+    return dataWithoutFirstRow.map(row => {
       return {
         created: row[0],
         title: row[1],
