@@ -86,7 +86,7 @@ function Initiator({ setStep, ...props }) {
   return (
     <>
       <ExampleActivities />
-      <button className="startButton" onClick={() => setStep(0)}>
+      <button className="startButton actionButton" onClick={() => setStep(0)}>
         Zeig mir ein Zimmer
       </button>
     </>

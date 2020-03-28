@@ -34,7 +34,27 @@
   padding: 20px;
 }
 
-#navigation a {
+a {
   color: #1890FF;
   margin-left: 20px;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+}
+
+a:after {
+  display: block;
+  bottom: -4px;
+  height: 2px;
+  background-color: #1890FF;
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 0%;
+  transition: left 0.5s, width 0.5s;
+}
+
+a:hover:after {
+  width: 100%;
+  left: 0px;
 }

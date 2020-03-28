@@ -74,12 +74,12 @@ export function Listing({ setListing, ...props }) {
           variant="contained"
           color="primary"
           size="large"
-          className="listingButton"
+          className="listingButton actionButton"
           startIcon={<HomeOutlinedIcon />}
         >
           Mitmachen
         </Button>
-        <Link href="/faq">Wie funktioniert das?</Link>
+        <a href="/faq">Wie funktioniert das?</a>
       </div>
       <div className="listingDescription">
         <Typography variant="body1" gutterBottom>

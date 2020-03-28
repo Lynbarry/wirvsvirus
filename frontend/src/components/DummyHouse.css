@@ -1,10 +1,6 @@
 #testHouse {
   width: 100%;
   height: 100%;
-  background-image: url(".././assets/img/bg-image.png");
-  background-size: auto 80%;
-  background-position: 50% 100%;
-  background-repeat: no-repeat;
   position: relative;
   text-align: center;
   padding-top: 40px;
@@ -16,15 +12,30 @@
   z-index: 1000;
 }
 
+#houseContainer {
+  height: 86%;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  background-image: url(".././assets/img/bg-image.png");
+  background-size: cover;
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+}
+
 .overlay {
   width: 100%;
-  height: 100%;
   position: absolute;
   opacity: 0;
   transition: all 1s;
   -webkit-transition: all 1s;
   background-size: cover;
-  top: 0px;
+  height: 86%;
+  position: absolute;
+  bottom: 0px;
+  background-size: cover;
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
 }
 
 .overlay.active {
@@ -41,32 +52,24 @@
   font-size: 24px;
 }
 
+.roomLayer {
+  
+}
+
 #room1 {
   background-image: url(".././assets/img/schatten-1.svg");
-  background-size: auto 80%;
-  background-position: 50% 100%;
-  background-repeat: no-repeat;
 }
 
 #room2 {
   background-image: url(".././assets/img/schatten-2.svg");
-  background-size: auto 80%;
-  background-position: 50% 100%;
-  background-repeat: no-repeat;
 }
 
 #room3 {
   background-image: url(".././assets/img/schatten-3.svg");
-  background-size: auto 80%;
-  background-position: 50% 100%;
-  background-repeat: no-repeat;
 }
 
 #room5 {
   background-image: url(".././assets/img/schatten-4.svg");
-  background-size: auto 80%;
-  background-position: 50% 100%;
-  background-repeat: no-repeat;
 }
 
 .lightOut {

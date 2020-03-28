@@ -26,6 +26,7 @@ export function DummyHouse({ listing, setListing, ...props }) {
           setListing={setListing}
         />
       </div>  
+      <div id="houseContainer"></div>
       <div className={`overlay ${decisions.kopfbauch ? 'active' : ''}`} id="room1"></div>
       <div className={`overlay ${decisions.helldunkel ? 'active' : ''}`} id="room2"></div>
       <div className={`overlay ${decisions.grossklein ? 'active' : ''}`} id="room3"></div>

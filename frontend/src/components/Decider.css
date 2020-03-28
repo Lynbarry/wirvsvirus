@@ -7,8 +7,12 @@
   border: none;
   border-radius: 6px;
   margin-top: 40px;
-  -webkit-animation: vibrate-1 0.3s linear 3s infinite both;
-  animation: vibrate-1 0.3s linear 3s infinite both;
+}
+
+.actionButton:hover {
+  -webkit-animation: vibrate-1 0.3s linear infinite both;
+  animation: vibrate-1 0.3s linear infinite both;
+  cursor: pointer;
 }
 
 .deciderButtons {
