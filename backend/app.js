@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { google } = require("googleapis");
+const crypto = require("crypto");
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -19,10 +20,14 @@ sheets.spreadsheets.values
   .then(res => {
     const dataWithoutFirstRow = res.data.values.slice(1);
     return dataWithoutFirstRow.map(row => {
+      const abstract = row[2];
+      const hashString = createId(abstract);
+      console.log(hashString);
+
       return {
         created: row[0],
         title: row[1],
-        abstract: row[2],
+        abstract,
         date: row[3],
         time: row[4],
         duration: row[5],
@@ -39,7 +44,8 @@ sheets.spreadsheets.values
           noise: row[15],
           clean: row[16],
           speed: row[17]
-        }
+        },
+        id: hashString
       };
     });
   })
@@ -47,6 +53,18 @@ sheets.spreadsheets.values
     app.use(bodyParser.json());
     app.use(cors());
     app.get("/", (req, res) => res.send("Hello World!"));
+
+    app.get("/listing/:listingId", (req, res) => {
+      const listingId = req.params.listingId;
+      const listings = cleanedListings.filter(
+        listing => listing.id === listingId
+      );
+      if (listings.length > 0) {
+        res.json(listings[0]);
+      } else {
+        res.status(404).send("Not found");
+      }
+    });
 
     /* 
     Expect JSON in the following structure:
@@ -74,6 +92,13 @@ sheets.spreadsheets.values
       console.log(`Example app listening on port ${port}!`)
     );
   });
+
+function createId(abstract) {
+  const hash = crypto.createHash("md5");
+  hash.update(abstract);
+  const hashString = hash.digest("hex");
+  return hashString;
+}
 
 /*
   Takes data in the form of:

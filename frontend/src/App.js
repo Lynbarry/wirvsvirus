@@ -32,8 +32,7 @@ import { Header } from "./components/Header";
 // };
 
 function App() {
-  const [listing, setListing] = useState(null);
-
+  const [headerSize, setHeaderSize] = useState("big");
   // Uncomment this to render a Listing with default content for development
   // useEffect(() => {
   //   setListing(exampleListing);
@@ -42,15 +41,12 @@ function App() {
 
   return (
     <Router>
-      <Header size={listing ? "small" : "big"} />
+      <Header size={headerSize} />
       <main className="content">
         <Switch>
+          <Route path="/listing/:listingId" component={Listing} />
           <Route path="/">
-            {listing ? (
-              <Listing setListing={setListing} {...listing} />
-            ) : (
-              <DummyHouse listing={listing} setListing={setListing} />
-            )}
+            <DummyHouse />
           </Route>
         </Switch>
       </main>

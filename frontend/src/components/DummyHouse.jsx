@@ -19,18 +19,25 @@ export function DummyHouse({ listing, setListing, ...props }) {
   return (
     <div id="testHouse">
       <div className="deciderContainer">
-        <Decider
-          decisions={decisions}
-          setDecision={setDecision}
-          listing={listing}
-          setListing={setListing}
-        />
-      </div>  
+        <Decider decisions={decisions} setDecision={setDecision} />
+      </div>
       <div id="houseContainer"></div>
-      <div className={`overlay ${decisions.kopfbauch ? 'active' : ''}`} id="room1"></div>
-      <div className={`overlay ${decisions.helldunkel ? 'active' : ''}`} id="room2"></div>
-      <div className={`overlay ${decisions.grossklein ? 'active' : ''}`} id="room3"></div>
-      <div className={`overlay ${decisions.lautleise ? 'active' : ''}`} id="room4"></div>
+      <div
+        className={`overlay ${decisions.kopfbauch ? "active" : ""}`}
+        id="room1"
+      ></div>
+      <div
+        className={`overlay ${decisions.helldunkel ? "active" : ""}`}
+        id="room2"
+      ></div>
+      <div
+        className={`overlay ${decisions.grossklein ? "active" : ""}`}
+        id="room3"
+      ></div>
+      <div
+        className={`overlay ${decisions.lautleise ? "active" : ""}`}
+        id="room4"
+      ></div>
     </div>
   );
 }

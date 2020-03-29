@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import "./Decider.css";
-import { Listing } from "./Listing";
 import { ExampleActivities } from "./ExampleActivities";
 import axios from "axios";
 
@@ -36,26 +36,13 @@ const decisionData = [
   }
 ];
 
-export function Decider({
-  decisions,
-  setDecision,
-  listing,
-  setListing,
-  ...props
-}) {
+export function Decider({ decisions, setDecision, ...props }) {
+  const [listing, setListing] = useState(null);
   const [step, setStep] = useState(-1);
+  const [decided, setDecided] = useState(false);
 
-  if (listing) {
-    return <Listing {...listing} />;
-  }
-
-  switch (step) {
-    case -1:
-      return <Initiator setStep={setStep} {...props} />;
-    case decisionData.length:
-      // User has gone through the whole decision process
-      // Here we would need to talk to a backend to find out which listing we should go to based on the selection
-      setStep(-1);
+  useEffect(() => {
+    if (decided) {
       axios
         .post("https://zusammenimzimmer.herokuapp.com/listing", decisions, {
           headers: { "Content-Type": "application/json" },
@@ -66,8 +53,21 @@ export function Decider({
           setListing(res.data);
         })
         .catch(err => console.error(err));
+    }
+  }, [decided, decisions]);
 
-      //return <Redirect to={{ pathname: "/listing/123" }} />;
+  if (listing) {
+    return <Redirect to={{ pathname: `/listing/${listing.id}` }} />;
+  }
+
+  switch (step) {
+    case -1:
+      return <Initiator setStep={setStep} {...props} />;
+    case decisionData.length:
+      // User has gone through the whole decision process
+      setStep(-1);
+      setDecided(true);
+
       return <div>Loading...</div>;
     default:
       return (

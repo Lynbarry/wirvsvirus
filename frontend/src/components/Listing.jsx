@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+
 import { Button, Typography } from "@material-ui/core";
 import AccessTimeOutlinedIcon from "@material-ui/icons/AccessTimeOutlined";
 import PeopleOutlinedIcon from "@material-ui/icons/PeopleOutlined";
@@ -33,9 +35,32 @@ import "./Listing.css";
 }
 */
 
-export function Listing({ setListing, ...props }) {
-  const id = useParams();
-  console.log(id);
+export function Listing() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [listing, setListing] = useState(undefined);
+  const listingId = useParams().listingId;
+
+  useEffect(() => {
+    axios
+      .get(`https://zusammenimzimmer.herokuapp.com/listing/${listingId}`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: false,
+        responseType: "json"
+      })
+      .then(res => {
+        setListing(res.data);
+        setIsLoaded(true);
+      })
+      .catch(err => {
+        console.error(err);
+        setIsLoaded(true);
+      });
+  }, [listingId]);
+
+  return isLoaded ? <ListingContent {...listing} /> : <div>Loading...</div>;
+}
+
+const ListingContent = props => {
   return (
     <div className="listingContainer">
       <div className="listingBlock">
@@ -105,9 +130,9 @@ export function Listing({ setListing, ...props }) {
           </a>
         </div>
       </div>
-      <button className="rerollButton" onClick={() => setListing(undefined)}>
+      <button className="rerollButton" onClick={() => {}}>
         Zeig mir ein anders Zimmer
       </button>
     </div>
   );
-}
+};
