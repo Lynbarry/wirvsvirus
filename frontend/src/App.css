@@ -1,15 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Acme&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Acme&display=swap");
 
 .App {
   width: 100wh;
   height: 100vh;
-}
-
-.header {
-  width: 100%;
-  height: 16vh;
-  padding-top: 20px;
-  box-sizing: border-box;
 }
 
 .content {
@@ -17,25 +10,8 @@
   height: 84vh;
 }
 
-.logo {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.logoImage {
-  width: 710px;
-}
-
-#navigation {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  padding: 20px;
-}
-
 a {
-  color: #1890FF;
+  color: #1890ff;
   margin-left: 20px;
   text-decoration: none;
   display: inline-block;
@@ -46,7 +22,7 @@ a:after {
   display: block;
   bottom: -4px;
   height: 2px;
-  background-color: #1890FF;
+  background-color: #1890ff;
   content: "";
   position: absolute;
   left: 50%;

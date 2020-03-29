@@ -4,7 +4,7 @@ import "./App.css";
 import "typeface-roboto";
 import { DummyHouse } from "./components/DummyHouse";
 import { Listing } from "./components/Listing";
-import logo from "./assets/img/logo.svg";
+import { Header } from "./components/Header";
 
 const exampleListing = {
   created: "22.03.2020 09:10:09",
@@ -42,15 +42,7 @@ function App() {
 
   return (
     <Router>
-      <header className="header">
-        <div className="logo">
-          <img src={logo} className="logoImage" alt="logo"></img>
-        </div>
-        <nav id="navigation">
-          <a href="">Zimmer eröffnen</a> 
-          <a href="">FAQ</a>
-        </nav>
-      </header>
+      <Header size={listing ? "small" : "big"} />
       <main className="content">
         <Switch>
           <Route path="/">

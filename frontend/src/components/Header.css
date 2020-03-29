@@ -1,0 +1,27 @@
+.header {
+  width: 100%;
+  height: 16vh;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+
+.header-big .logoImage {
+  width: 710px;
+}
+
+.header-small .logoImage {
+  width: 510px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+#navigation {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 20px;
+}
