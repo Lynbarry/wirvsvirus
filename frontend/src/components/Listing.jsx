@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Button, Typography, Link } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import AccessTimeOutlinedIcon from "@material-ui/icons/AccessTimeOutlined";
 import PeopleOutlinedIcon from "@material-ui/icons/PeopleOutlined";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
@@ -82,11 +82,9 @@ export function Listing({ setListing, ...props }) {
         <a href="/faq">Wie funktioniert das?</a>
       </div>
       <div className="listingDescription">
-        <Typography variant="body1" gutterBottom>
-          <div>{props.abstract}</div>
-          <p>Stream-Info:</p>
-          <div>{props.broadcast}</div>
-        </Typography>
+        <p>{props.abstract}</p>
+        <p>Stream-Info:</p>
+        <p>{props.broadcast}</p>
       </div>
       <div className="listing--further">
         <p className="listing--further-heading">Über Zusammen im Zimmer</p>
@@ -96,18 +94,20 @@ export function Listing({ setListing, ...props }) {
           könnt.
         </p>
         <div>
-          <a className="listing--further-link" href="#">
+          <a className="listing--further-link" href="/faq">
             Missbrauch melden
           </a>
-          <a className="listing--further-link" href="#">
+          <a className="listing--further-link" href="/faq">
             Zimmer eröffnen (Stream anbieten)
           </a>
-          <a className="listing--further-link" href="#">
+          <a className="listing--further-link" href="/faq">
             Hilfe
           </a>
         </div>
       </div>
-      <button className="rerollButton" onClick={() => setListing(undefined)}>Zeig mir ein anders Zimmer</button>
+      <button className="rerollButton" onClick={() => setListing(undefined)}>
+        Zeig mir ein anders Zimmer
+      </button>
     </div>
   );
 }

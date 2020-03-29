@@ -9,8 +9,8 @@ export const Header = ({ size }) => {
         <img src={logo} className="logoImage" alt="logo"></img>
       </div>
       <nav id="navigation">
-        <a href="">Zimmer eröffnen</a>
-        <a href="">FAQ</a>
+        <a href="/faq">Zimmer eröffnen</a>
+        <a href="/faq">FAQ</a>
       </nav>
     </header>
   );
