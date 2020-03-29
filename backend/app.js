@@ -96,19 +96,14 @@ function convertSelection(selection) {
 
 function getFittingListing(listings, input) {
   const fittingListings = listings.filter(listing => {
-    return input.light
-      ? listing.categories.light === input.light
-      : true && input.body
-      ? listing.categories.body === input.body
-      : true && input.size
-      ? listing.categories.size === input.size
-      : true && input.noise
-      ? listing.categories.noise === input.noise
-      : true && input.clean
-      ? listing.categories.clean === input.clean
-      : true && input.speed
-      ? listing.categories.speed === input.speed
-      : true;
+    return (
+      (input.light ? listing.categories.light === input.light : true) &&
+      (input.body ? listing.categories.body === input.body : true) &&
+      (input.size ? listing.categories.size === input.size : true) &&
+      (input.noise ? listing.categories.noise === input.noise : true) &&
+      (input.clean ? listing.categories.clean === input.clean : true) &&
+      (input.speed ? listing.categories.speed === input.speed : true)
+    );
   });
 
   const randomFittingListing =
