@@ -4,6 +4,7 @@ import "./App.css";
 import "typeface-roboto";
 import { DummyHouse } from "./components/DummyHouse";
 import { Listing } from "./components/Listing";
+import { Faqs } from "./components/Faqs";
 import { Header } from "./components/Header";
 
 // const exampleListing = {
@@ -45,6 +46,7 @@ function App() {
       <main className="content">
         <Switch>
           <Route path="/listing/:listingId" component={Listing} />
+          <Route path="/faq" component={Faqs} />
           <Route path="/">
             <DummyHouse />
           </Route>

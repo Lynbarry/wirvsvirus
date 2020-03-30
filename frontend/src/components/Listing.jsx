@@ -62,7 +62,7 @@ export function Listing() {
 
 const ListingContent = props => {
   return (
-    <div className="listingContainer">
+    <div className="wrapper">
       <div className="listingBlock">
         <Typography variant="h3">
           {props.title} von {props.name}

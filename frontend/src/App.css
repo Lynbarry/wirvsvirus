@@ -10,6 +10,11 @@
   height: 84vh;
 }
 
+.wrapper {
+  width: 1000px;
+  margin: auto;
+}
+
 a {
   color: #1890ff;
   margin-left: 20px;
