@@ -85,7 +85,11 @@ sheets.spreadsheets.values
         cleanedListings,
         convertedSelection
       );
-      res.json(fittingListings);
+
+      const reponse = Boolean(fittingListings)
+        ? fittingListings
+        : getRandomListing(cleanedListings);
+      res.json(reponse);
     });
 
     app.listen(port, () =>
@@ -131,7 +135,9 @@ function getFittingListing(listings, input) {
     );
   });
 
-  const randomFittingListing =
-    fittingListings[Math.floor(Math.random() * fittingListings.length)];
-  return randomFittingListing;
+  return getRandomListing(fittingListings);
+}
+
+function getRandomListing(listings) {
+  return listings[Math.floor(Math.random() * listings.length)];
 }
