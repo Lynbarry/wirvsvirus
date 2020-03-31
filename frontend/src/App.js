@@ -6,6 +6,7 @@ import { DummyHouse } from "./components/DummyHouse";
 import { Listing } from "./components/Listing";
 import { Faqs } from "./components/Faqs";
 import { Header } from "./components/Header";
+import {Helmet} from "react-helmet";
 
 // const exampleListing = {
 //   created: "22.03.2020 09:10:09",
@@ -42,6 +43,11 @@ function App() {
 
   return (
     <Router>
+      <Helmet>
+          <meta charSet="utf-8" />
+          <title>Zusammen im Zimmer</title>
+          <meta name="description" content="In Quarantäne soziale Online-Aktivitäten finden" />
+      </Helmet>
       <Header size={headerSize} />
       <main className="content">
         <Switch>
