@@ -35,10 +35,12 @@ import "./Listing.css";
 }
 */
 
-export function Listing() {
+export function Listing({ setHeaderSize }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [listing, setListing] = useState(undefined);
   const listingId = useParams().listingId;
+
+  setHeaderSize("small");
 
   useEffect(() => {
     axios

@@ -45,13 +45,16 @@ function App() {
       <Header size={headerSize} />
       <main className="content">
         <Switch>
-          <Route path="/listing/:listingId" component={Listing} />
+          <Route
+            path="/listing/:listingId"
+            render={() => <Listing setHeaderSize={setHeaderSize} />}
+          />
+          <Route path="/faq" component={Faqs} />
           <Route path="/">
             <DummyHouse />
           </Route>
         </Switch>
       </main>
-      
     </Router>
   );
 }
