@@ -46,12 +46,12 @@ function App() {
       <main className="content">
         <Switch>
           <Route path="/listing/:listingId" component={Listing} />
-          <Route path="/faq" component={Faqs} />
           <Route path="/">
             <DummyHouse />
           </Route>
         </Switch>
       </main>
+      
     </Router>
   );
 }
