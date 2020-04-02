@@ -59,7 +59,7 @@ export function Listing({ setHeaderSize }) {
       });
   }, [listingId]);
 
-  return isLoaded ? <ListingContent {...listing} /> : <div>Loading...</div>;
+  return isLoaded ? <ListingContent {...listing} /> : <div className="loadingOverlay"><div>Loading...</div></div>;
 }
 
 const ListingContent = props => {

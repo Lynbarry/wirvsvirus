@@ -10,13 +10,12 @@
 }
 
 .header-small .logoImage {
-  width: 510px;
+  width: 410px;
 }
 
 .logo {
-  display: flex;
-  justify-content: center;
   width: 100%;
+  text-align: center;
 }
 
 #navigation {
@@ -24,4 +23,19 @@
   top: 0px;
   right: 0px;
   padding: 20px;
+}
+
+.backToStart {
+  display: static;
+}
+
+.header-big .backToStart {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .header-big .logoImage {
+    width: 80%;
+    margin: auto;
+  }
 }

@@ -7,28 +7,28 @@ import axios from "axios";
 
 const decisionData = [
   {
-    subline: "Um dich zuzuordnen, hier vier Fragen:",
+    subline: "Frage 1/4",
     question: "Kopf oder Bauch",
     answerOne: "Kopf",
     answerTwo: "Bauch",
     decisionKey: "kopfbauch"
   },
   {
-    subline: "Frage zwei von vier:",
+    subline: "Frage 2/4",
     question: "Hell oder Dunkel",
     answerOne: "Hell",
     answerTwo: "Dunkel",
     decisionKey: "helldunkel"
   },
   {
-    subline: "Frage drei von vier:",
+    subline: "Frage 3/4",
     question: "Gross oder Klein",
     answerOne: "Gross",
     answerTwo: "Klein",
     decisionKey: "grossklein"
   },
   {
-    subline: "Letzte Frage:",
+    subline: "Frage 4/4",
     question: "Laut oder Leise",
     answerOne: "Laut",
     answerTwo: "Leise",
@@ -67,8 +67,7 @@ export function Decider({ decisions, setDecision, ...props }) {
       // User has gone through the whole decision process
       setStep(-1);
       setDecided(true);
-
-      return <div>Loading...</div>;
+      return <div className="loadingOverlay">loading...</div>;
     default:
       return (
         <DeciderButtons
@@ -89,6 +88,9 @@ function Initiator({ setStep, ...props }) {
       <button className="startButton actionButton" onClick={() => setStep(0)}>
         Zeig mir ein Zimmer
       </button>
+      <button className="actionButton">
+        <a target="blank" href="https://docs.google.com/forms/d/e/1FAIpQLSe-H75uQp0nyQSGD1n9ACGWwQY0zktaaUXoM3TsGX7KbNJVEQ/viewform">Eröffne ein Zimmer</a>
+      </button>
     </>
   );
 }
@@ -101,12 +103,12 @@ function DeciderButtons({ step, setDecision, decisions, setStep, ...props }) {
   return (
     <div className="deciderButtons" {...props}>
       <div className="deciderQuestion">
-        <Typography variant="h5" component="h5">
+        <h5>
           {subline}
-        </Typography>
-        <Typography variant="h4" component="h4">
+        </h5>
+        <h4>
           {question.toUpperCase()}?
-        </Typography>
+        </h4>
       </div>
       <div className="deciderAnswers">
         <div

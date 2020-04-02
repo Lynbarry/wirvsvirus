@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./ExampleActivities.css";
-import { Typography } from "@material-ui/core";
 
 const exampleActivities = [
   "zusammen Stricken lernen",
@@ -26,10 +25,10 @@ export function ExampleActivities() {
 
   return (
     <div className="exampleActivities">
-      <Typography variant="h5" gutterBottom>
+      <h2>
       In Quarantäne soziale Online-Aktivitäten finden<br />
       Zum Beispiel: <strong>{exampleActivities[activity]}</strong>
-      </Typography>
+      </h2>
     </div>
   );
 }

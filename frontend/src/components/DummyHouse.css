@@ -52,10 +52,6 @@
   font-size: 24px;
 }
 
-.roomLayer {
-  
-}
-
 #room1 {
   background-image: url(".././assets/img/schatten-1.svg");
 }
@@ -89,5 +85,12 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  #houseContainer, .overlay {
+    height: 70%;
   }
 }
