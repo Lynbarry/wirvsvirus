@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const moment = require("moment");
 const { google } = require("googleapis");
 const crypto = require("crypto");
 
@@ -81,14 +82,15 @@ sheets.spreadsheets.values
     */
     app.post("/listing", (req, res) => {
       const convertedSelection = convertSelection(req.body);
+      const futureListings = removeExpiredListings(cleanedListings);
       const fittingListings = getFittingListing(
-        cleanedListings,
+        futureListings,
         convertedSelection
       );
 
       const reponse = Boolean(fittingListings)
         ? fittingListings
-        : getRandomListing(cleanedListings);
+        : getRandomListing(futureListings);
       res.json(reponse);
     });
 
@@ -140,4 +142,15 @@ function getFittingListing(listings, input) {
 
 function getRandomListing(listings) {
   return listings[Math.floor(Math.random() * listings.length)];
+}
+
+function removeExpiredListings(listings) {
+  return listings.filter(listing => {
+    const date = moment(
+      `${listing.date} ${listing.time}`,
+      "DD.MM.YYYY HH:mm:ss"
+    );
+    const now = moment(new Date());
+    return now.isBefore(date);
+  });
 }
