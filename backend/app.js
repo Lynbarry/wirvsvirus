@@ -5,6 +5,11 @@ const moment = require("moment");
 const { google } = require("googleapis");
 const crypto = require("crypto");
 
+const serviceAccountPrivateKey = process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(
+  /\\n/g,
+  "\n"
+);
+const serviceAccountEmail = process.env.SERVICE_ACCOUNT_CLIENT_EMAIL;
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -14,21 +19,30 @@ const sheets = google.sheets("v4");
 const spreadsheetId = "1Kyb0LPvplFFeT5vNmcs1GIfuEmrAqDR4fLDK4R2BkI4";
 
 // Test Spreadsheet
-//const spreadsheetId = "1PsKgvrHh50jM1jrEp1Vygvoc_J-H3JFsNmSSL3gO8TA";
+// const spreadsheetId = "1PsKgvrHh50jM1jrEp1Vygvoc_J-H3JFsNmSSL3gO8TA";
 
-sheets.spreadsheets.values
-  .get({
-    auth: process.env.GOOGLE_SHEET_API_KEY,
-    spreadsheetId,
-    range: "A1:R100"
+const jwtClient = new google.auth.JWT(
+  serviceAccountEmail,
+  null,
+  serviceAccountPrivateKey,
+  ["https://www.googleapis.com/auth/spreadsheets"]
+);
+
+jwtClient
+  .authorize()
+  .then(res => {
+    return sheets.spreadsheets.values.get({
+      auth: jwtClient,
+      spreadsheetId,
+      range: "A1:U100"
+    });
   })
   .then(res => {
     const dataWithoutFirstRow = res.data.values.slice(1);
-    return dataWithoutFirstRow.map(row => {
+    return dataWithoutFirstRow.map((row, index) => {
       const abstract = row[2];
       const hashString = createId(abstract);
       console.log(hashString);
-
       return {
         created: row[0],
         title: row[1],
@@ -50,14 +64,14 @@ sheets.spreadsheets.values
           clean: row[16],
           speed: row[17]
         },
-        id: hashString
+        id: hashString,
+        row: index
       };
     });
   })
   .then(cleanedListings => {
     app.use(bodyParser.json());
     app.use(cors());
-    app.get("/", (req, res) => res.send("Hello World!"));
 
     app.get("/listing/:listingId", (req, res) => {
       const listingId = req.params.listingId;
@@ -96,6 +110,40 @@ sheets.spreadsheets.values
         ? fittingListings
         : getRandomListing(futureListings);
       res.json(reponse);
+    });
+
+    app.post("/join", (req, res) => {
+      const id = req.body.id;
+      const listing = cleanedListings.filter(listing => listing.id === id)[0];
+      sheets.spreadsheets.values
+        .get({
+          auth: jwtClient,
+          spreadsheetId,
+          range: `U${listing.row}`
+        })
+        .catch(err => console.error("Couldn't get spreadsheet. Reason:", err))
+        .then(val => {
+          const values = val.data.values;
+          const currentCount = Boolean(values) ? val.data.values[0][0] : 0;
+          const newCount = Number(currentCount) + 1;
+          return sheets.spreadsheets.values.batchUpdate({
+            auth: jwtClient,
+            spreadsheetId,
+            requestBody: {
+              data: {
+                range: `U${listing.row}`,
+                values: [[newCount]]
+              },
+              valueInputOption: "RAW"
+            }
+          });
+        })
+        .catch(err =>
+          console.error("Couldn't update spreadsheet. Reason:", err)
+        )
+        .then(() => {
+          res.status(200).send();
+        });
     });
 
     app.listen(port, () =>
