@@ -30,14 +30,14 @@ const jwtClient = new google.auth.JWT(
 
 jwtClient
   .authorize()
-  .then(res => {
+  .then((res) => {
     return sheets.spreadsheets.values.get({
       auth: jwtClient,
       spreadsheetId,
-      range: "A1:U100"
+      range: "A1:U100",
     });
   })
-  .then(res => {
+  .then((res) => {
     const dataWithoutFirstRow = res.data.values.slice(1);
     return dataWithoutFirstRow.map((row, index) => {
       const abstract = row[2];
@@ -62,21 +62,22 @@ jwtClient
           size: row[14],
           noise: row[15],
           clean: row[16],
-          speed: row[17]
+          speed: row[17],
         },
         id: hashString,
-        row: index
+        row: index + 2,
+        participants: Boolean(row[20]) ? Number(row[20]) : 0,
       };
     });
   })
-  .then(cleanedListings => {
+  .then((cleanedListings) => {
     app.use(bodyParser.json());
     app.use(cors());
 
     app.get("/listing/:listingId", (req, res) => {
       const listingId = req.params.listingId;
       const listings = cleanedListings.filter(
-        listing => listing.id === listingId
+        (listing) => listing.id === listingId
       );
       if (listings.length > 0) {
         res.json(listings[0]);
@@ -114,15 +115,15 @@ jwtClient
 
     app.post("/join", (req, res) => {
       const id = req.body.id;
-      const listing = cleanedListings.filter(listing => listing.id === id)[0];
+      const listing = cleanedListings.filter((listing) => listing.id === id)[0];
       sheets.spreadsheets.values
         .get({
           auth: jwtClient,
           spreadsheetId,
-          range: `U${listing.row}`
+          range: `U${listing.row}`,
         })
-        .catch(err => console.error("Couldn't get spreadsheet. Reason:", err))
-        .then(val => {
+        .catch((err) => console.error("Couldn't get spreadsheet. Reason:", err))
+        .then((val) => {
           const values = val.data.values;
           const currentCount = Boolean(values) ? val.data.values[0][0] : 0;
           const newCount = Number(currentCount) + 1;
@@ -132,13 +133,13 @@ jwtClient
             requestBody: {
               data: {
                 range: `U${listing.row}`,
-                values: [[newCount]]
+                values: [[newCount]],
               },
-              valueInputOption: "RAW"
-            }
+              valueInputOption: "RAW",
+            },
           });
         })
-        .catch(err =>
+        .catch((err) =>
           console.error("Couldn't update spreadsheet. Reason:", err)
         )
         .then(() => {
@@ -173,12 +174,12 @@ function convertSelection(selection) {
     light: selection.helldunkel,
     body: selection.kopfbauch,
     size: selection.grossklein,
-    noise: selection.lautleise
+    noise: selection.lautleise,
   };
 }
 
 function getFittingListing(listings, input) {
-  const fittingListings = listings.filter(listing => {
+  const fittingListings = listings.filter((listing) => {
     return (
       (input.light ? listing.categories.light === input.light : true) &&
       (input.body ? listing.categories.body === input.body : true) &&
@@ -197,7 +198,7 @@ function getRandomListing(listings) {
 }
 
 function removeExpiredListings(listings) {
-  return listings.filter(listing => {
+  return listings.filter((listing) => {
     const date = moment(
       `${listing.date} ${listing.time}`,
       "DD.MM.YYYY HH:mm:ss"
