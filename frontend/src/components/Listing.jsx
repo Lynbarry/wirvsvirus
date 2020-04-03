@@ -63,6 +63,8 @@ export function Listing({ setHeaderSize }) {
 }
 
 const ListingContent = props => {
+  const [oClass, setOClass] = React.useState("")
+  
   return (
     <div className="wrapper">
       <div className="listingBlock">
@@ -101,12 +103,15 @@ const ListingContent = props => {
           variant="contained"
           color="primary"
           size="large"
-          className="listingButton actionButton"
+          className="primary actionButton"
           startIcon={<HomeOutlinedIcon />}
+          onClick={() => {
+            setOClass("active")
+          }}
         >
           Mitmachen
         </Button>
-        <a href="/faq">Wie funktioniert das?</a>
+        <a href="https://docs.google.com/document/d/1iU-KhLWcl6hAg8GHEPamBzc90jk6vw3B2_R-V7GUyvo/edit#heading=h.d8waaqmdpqay">Wie funktioniert das?</a>
       </div>
       <div className="listingDescription">
         <p>{props.abstract}</p>
@@ -135,6 +140,28 @@ const ListingContent = props => {
       <button className="rerollButton" onClick={() => {}}>
         Zeig mir ein anders Zimmer
       </button>
+      <div id="instructionOverlay" className={oClass}>
+        <div>
+          <h3>Super!</h3>
+          <p>
+            Du möchtest bei "{props.title}" im Zimmer von {props.name} mitmachen. Bitte lies dir {props.name}s Beschreibung genau durch:
+          </p> 
+          <p>
+            * Auf welcher Online-Plattform und unter welchem Link die Aktivität stattfindet, steht in der Beschreibung.<br /> 
+            * Klicke pünktlich auf den Link, damit {props.name}s Mühe sich lohnt.<br /> 
+            * Ob der Zugang beschränkt ist und wer mitmachen kann, entscheidet {props.name} über die Online-Plattform. 
+          </p>
+          <p>   
+            Viel Spaß! Hast du Fragen? Schreib uns 
+          </p>
+          <button 
+            className="primary actionButton"
+            onClick={() => {
+              setOClass("")
+            }}
+          >ok</button>
+        </div>
+      </div>
     </div>
   );
 };

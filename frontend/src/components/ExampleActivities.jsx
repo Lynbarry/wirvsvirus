@@ -26,7 +26,7 @@ export function ExampleActivities() {
   return (
     <div className="exampleActivities">
       <h2>
-      In Quarantäne soziale Online-Aktivitäten finden<br />
+      Finde in Quarantäne soziale Online-Aktivitäten<br />
       Zum Beispiel: <strong>{exampleActivities[activity]}</strong>
       </h2>
     </div>

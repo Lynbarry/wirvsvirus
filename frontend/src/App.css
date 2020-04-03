@@ -44,6 +44,10 @@ a:hover:after {
   left: 0px;
 }
 
+p {
+  font-size: 24px;
+}
+
 h2, h3, h4, h5 {
   font-weight: normal;
 }
@@ -64,12 +68,25 @@ h5 {
 
 button {
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.5);
-  padding: 20px 40px;
+  padding: 10px 40px;
   font-size: 22px;
   background: #fff;
   border-radius: 6px;
   margin: 40px 10px 0px 10px;
   border: 2px solid #ffcc00;
+  min-width: 200px;
+}
+
+button.primary {
+  background: #FFCC00;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.5);
+  color: #000;
+}
+
+button.primary:hover {
+  background: #FFCC00;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.5);
+  color: #000;
 }
 
 button a {
