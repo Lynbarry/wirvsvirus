@@ -30,46 +30,7 @@ const jwtClient = new google.auth.JWT(
 
 jwtClient
   .authorize()
-  .then((res) => {
-    return sheets.spreadsheets.values.get({
-      auth: jwtClient,
-      spreadsheetId,
-      range: "A1:U100",
-    });
-  })
-  .then((res) => {
-    const dataWithoutFirstRow = res.data.values.slice(1);
-    return dataWithoutFirstRow.map((row, index) => {
-      const abstract = row[2];
-      const hashString = createId(abstract);
-      console.log(hashString);
-      return {
-        created: row[0],
-        title: row[1],
-        abstract,
-        date: row[3],
-        time: row[4],
-        duration: row[5],
-        level: row[6],
-        participantCount: row[7],
-        broadcast: row[8],
-        name: row[9],
-        email: row[10],
-        cost: row[11],
-        categories: {
-          light: row[12],
-          body: row[13],
-          size: row[14],
-          noise: row[15],
-          clean: row[16],
-          speed: row[17],
-        },
-        id: hashString,
-        row: index + 2,
-        participants: Boolean(row[20]) ? Number(row[20]) : 0,
-      };
-    });
-  })
+  .then(() => loadListings())
   .then((cleanedListings) => {
     app.use(bodyParser.json());
     app.use(cors());
@@ -143,6 +104,11 @@ jwtClient
           console.error("Couldn't update spreadsheet. Reason:", err)
         )
         .then(() => {
+          loadListings();
+          return loadListings();
+        })
+        .then((listings) => {
+          cleanedListings = listings;
           res.status(200).send();
         });
     });
@@ -151,6 +117,52 @@ jwtClient
       console.log(`Example app listening on port ${port}!`)
     );
   });
+
+function loadListings() {
+  return sheets.spreadsheets.values
+    .get({
+      auth: jwtClient,
+      spreadsheetId,
+      range: "A1:U100",
+    })
+    .then((res) => {
+      return convertRowsToListings(res.data.values);
+    });
+}
+
+function convertRowsToListings(rows) {
+  const dataWithoutFirstRow = rows.slice(1);
+  return dataWithoutFirstRow.map((row, index) => {
+    const abstract = row[2];
+    const hashString = createId(abstract);
+    console.log(hashString);
+    return {
+      created: row[0],
+      title: row[1],
+      abstract,
+      date: row[3],
+      time: row[4],
+      duration: row[5],
+      level: row[6],
+      participantCount: row[7],
+      broadcast: row[8],
+      name: row[9],
+      email: row[10],
+      cost: row[11],
+      categories: {
+        light: row[12],
+        body: row[13],
+        size: row[14],
+        noise: row[15],
+        clean: row[16],
+        speed: row[17],
+      },
+      id: hashString,
+      row: index + 2,
+      participants: Boolean(row[20]) ? Number(row[20]) : 0,
+    };
+  });
+}
 
 function createId(abstract) {
   const hash = crypto.createHash("md5");
