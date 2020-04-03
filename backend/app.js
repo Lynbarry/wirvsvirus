@@ -10,7 +10,11 @@ const port = process.env.PORT || 3001;
 
 const sheets = google.sheets("v4");
 
+// Live Spreadsheet
 const spreadsheetId = "1Kyb0LPvplFFeT5vNmcs1GIfuEmrAqDR4fLDK4R2BkI4";
+
+// Test Spreadsheet
+//const spreadsheetId = "1PsKgvrHh50jM1jrEp1Vygvoc_J-H3JFsNmSSL3gO8TA";
 
 sheets.spreadsheets.values
   .get({
