@@ -7,9 +7,8 @@
   width: 230px;
   float: right;
   border-radius: 6px;
-  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.5)!important;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.5) !important;
 }
-
 
 .listingBlock {
   margin-bottom: 50px;
@@ -20,8 +19,12 @@
 }
 
 .listingBlock h3 {
-  font-family: 'Acme', sans-serif;
+  font-family: "Acme", sans-serif;
   width: 65%;
+}
+
+.listingBlock--participants {
+  margin-bottom: 0;
 }
 
 .listingProperty {
@@ -33,10 +36,14 @@
 }
 
 .listingParticipate {
-  width: 350px;
+  width: 470px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.listingParticipate p {
+  margin-bottom: 0;
 }
 
 .listingButton {
@@ -66,7 +73,7 @@
   right: -320px;
   top: 200px;
   width: 365px;
-  background: #FFEDA3;
+  background: #ffeda3;
   border-radius: 6px;
   border: none;
   height: 55px;
@@ -104,7 +111,7 @@
 }
 
 #instructionOverlay div h3 {
-  font-family: 'Acme', sans-serif;
+  font-family: "Acme", sans-serif;
   font-size: 48px;
   line-height: 61px;
   margin: 0px;

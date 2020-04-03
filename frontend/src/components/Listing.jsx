@@ -44,27 +44,50 @@ export function Listing({ setHeaderSize }) {
 
   useEffect(() => {
     axios
-      .get(`https://zusammenimzimmer.herokuapp.com/listing/${listingId}`, {
+      .get(`http://localhost:5000/listing/${listingId}`, {
         headers: { "Content-Type": "application/json" },
         withCredentials: false,
-        responseType: "json"
+        responseType: "json",
       })
-      .then(res => {
+      .then((res) => {
+        console.log(res.data);
         setListing(res.data);
         setIsLoaded(true);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         setIsLoaded(true);
       });
   }, [listingId]);
 
-  return isLoaded ? <ListingContent {...listing} /> : <div className="loadingOverlay"><div>Loading...</div></div>;
+  return isLoaded ? (
+    <ListingContent {...listing} setListing={setListing} />
+  ) : (
+    <div className="loadingOverlay">
+      <div>Loading...</div>
+    </div>
+  );
 }
 
-const ListingContent = props => {
-  const [oClass, setOClass] = React.useState("")
-  
+const ListingContent = ({ setListing, ...props }) => {
+  const [oClass, setOClass] = React.useState("");
+  const [join, setJoin] = React.useState(false);
+
+  useEffect(() => {
+    if (join) {
+      console.log("making request");
+      console.log(props.id);
+      setJoin(false);
+      axios
+        .post("http://localhost:5000/join", {
+          id: props.id,
+        })
+        .then(() => {
+          setListing({ ...props, participants: props.participants + 1 });
+        });
+    }
+  }, [join]);
+
   return (
     <div className="wrapper">
       <div className="listingBlock">
@@ -106,12 +129,17 @@ const ListingContent = props => {
           className="primary actionButton"
           startIcon={<HomeOutlinedIcon />}
           onClick={() => {
-            setOClass("active")
+            setOClass("active");
           }}
         >
           Mitmachen
         </Button>
-        <a href="https://docs.google.com/document/d/1iU-KhLWcl6hAg8GHEPamBzc90jk6vw3B2_R-V7GUyvo/edit#heading=h.d8waaqmdpqay">Wie funktioniert das?</a>
+        <Typography className="listingBlock--participants">
+          {props.participants} Teilnehmer
+        </Typography>
+        <a href="https://docs.google.com/document/d/1iU-KhLWcl6hAg8GHEPamBzc90jk6vw3B2_R-V7GUyvo/edit#heading=h.d8waaqmdpqay">
+          Wie funktioniert das?
+        </a>
       </div>
       <div className="listingDescription">
         <p>{props.abstract}</p>
@@ -144,22 +172,27 @@ const ListingContent = props => {
         <div>
           <h3>Super!</h3>
           <p>
-            Du möchtest bei "{props.title}" im Zimmer von {props.name} mitmachen. Bitte lies dir {props.name}s Beschreibung genau durch:
-          </p> 
+            Du möchtest bei "{props.title}" im Zimmer von {props.name}{" "}
+            mitmachen. Bitte lies dir {props.name}s Beschreibung genau durch:
+          </p>
           <p>
-            * Auf welcher Online-Plattform und unter welchem Link die Aktivität stattfindet, steht in der Beschreibung.<br /> 
-            * Klicke pünktlich auf den Link, damit {props.name}s Mühe sich lohnt.<br /> 
-            * Ob der Zugang beschränkt ist und wer mitmachen kann, entscheidet {props.name} über die Online-Plattform. 
+            * Auf welcher Online-Plattform und unter welchem Link die Aktivität
+            stattfindet, steht in der Beschreibung.
+            <br />* Klicke pünktlich auf den Link, damit {props.name}s Mühe sich
+            lohnt.
+            <br />* Ob der Zugang beschränkt ist und wer mitmachen kann,
+            entscheidet {props.name} über die Online-Plattform.
           </p>
-          <p>   
-            Viel Spaß! Hast du Fragen? Schreib uns 
-          </p>
-          <button 
+          <p>Viel Spaß! Hast du Fragen? Schreib uns</p>
+          <button
             className="primary actionButton"
             onClick={() => {
-              setOClass("")
+              setOClass("");
+              setJoin(true);
             }}
-          >ok</button>
+          >
+            ok
+          </button>
         </div>
       </div>
     </div>
