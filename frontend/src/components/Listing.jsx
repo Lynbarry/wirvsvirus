@@ -44,7 +44,7 @@ export function Listing({ setHeaderSize }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/listing/${listingId}`, {
+      .get(`https://zusammenimzimmer.herokuapp.com/listing/${listingId}`, {
         headers: { "Content-Type": "application/json" },
         withCredentials: false,
         responseType: "json",
@@ -79,7 +79,7 @@ const ListingContent = ({ setListing, ...props }) => {
       console.log(props.id);
       setJoin(false);
       axios
-        .post("http://localhost:5000/join", {
+        .post("https://zusammenimzimmer.herokuapp.com/join", {
           id: props.id,
         })
         .then(() => {
