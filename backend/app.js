@@ -76,6 +76,7 @@ jwtClient
 
     app.post("/join", (req, res) => {
       const id = req.body.id;
+      const add = req.body.add;
       const listing = cleanedListings.filter((listing) => listing.id === id)[0];
       sheets.spreadsheets.values
         .get({
@@ -87,7 +88,9 @@ jwtClient
         .then((val) => {
           const values = val.data.values;
           const currentCount = Boolean(values) ? val.data.values[0][0] : 0;
-          const newCount = Number(currentCount) + 1;
+          const newCount = add
+            ? Number(currentCount) + 1
+            : Number(currentCount) - 1;
           return sheets.spreadsheets.values.batchUpdate({
             auth: jwtClient,
             spreadsheetId,
