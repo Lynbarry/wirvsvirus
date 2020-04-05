@@ -50,7 +50,6 @@ export function Listing({ setHeaderSize }) {
         responseType: "json",
       })
       .then((res) => {
-        console.log(res.data);
         setListing(res.data);
         setIsLoaded(true);
       })
@@ -71,22 +70,41 @@ export function Listing({ setHeaderSize }) {
 
 const ListingContent = ({ setListing, ...props }) => {
   const [oClass, setOClass] = React.useState("");
-  const [join, setJoin] = React.useState(false);
+  const [shouldAdd, setShouldAdd] = React.useState(false);
+  const [fireRequest, setFireRequest] = React.useState(false);
+  const [localListingConfig, setLocalListingConfig] = React.useState({});
 
   useEffect(() => {
-    if (join) {
-      console.log("making request");
-      console.log(props.id);
-      setJoin(false);
-      axios
-        .post("https://zusammenimzimmer.herokuapp.com/join", {
-          id: props.id,
-        })
-        .then(() => {
-          setListing({ ...props, participants: props.participants + 1 });
-        });
+    if (fireRequest) {
+      setFireRequest(false);
+      setParticipationStatus(
+        props.id,
+        shouldAdd,
+        localListingConfig,
+        setLocalListingConfig
+      );
+      setListing({
+        ...props,
+        participants: shouldAdd
+          ? props.participants + 1
+          : props.participants - 1,
+      });
     }
-  }, [join]);
+  }, [shouldAdd]);
+
+  // Try to load data from local storage on load
+  useEffect(() => {
+    const localStorageConfig = localStorage.getItem(props.id);
+    if (localStorageConfig) {
+      try {
+        const localStorageJson = JSON.parse(localStorageConfig);
+        setLocalListingConfig(localStorageJson);
+        setShouldAdd(localStorageJson.joined);
+      } catch (e) {
+        console.error("Could not load config from localStorage", e);
+      }
+    }
+  }, []);
 
   return (
     <div className="wrapper">
@@ -122,18 +140,34 @@ const ListingContent = ({ setListing, ...props }) => {
         </Typography>
       </div>
       <div className="listingParticipate listingBlock">
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          className="primary actionButton"
-          startIcon={<HomeOutlinedIcon />}
-          onClick={() => {
-            setOClass("active");
-          }}
-        >
-          Mitmachen
-        </Button>
+        {localListingConfig.joined ? (
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            className="primary actionButton"
+            startIcon={<HomeOutlinedIcon />}
+            onClick={() => {
+              setFireRequest(true);
+              setShouldAdd(false);
+            }}
+          >
+            Doch nicht
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            className="primary actionButton"
+            startIcon={<HomeOutlinedIcon />}
+            onClick={() => {
+              setOClass("active");
+            }}
+          >
+            Mitmachen
+          </Button>
+        )}
         <Typography className="listingBlock--participants">
           {props.participants} Teilnehmer
         </Typography>
@@ -188,7 +222,8 @@ const ListingContent = ({ setListing, ...props }) => {
             className="primary actionButton"
             onClick={() => {
               setOClass("");
-              setJoin(true);
+              setFireRequest(true);
+              setShouldAdd(true);
             }}
           >
             ok
@@ -198,3 +233,32 @@ const ListingContent = ({ setListing, ...props }) => {
     </div>
   );
 };
+
+// Makes the API request, then sets localStorage and state
+function setParticipationStatus(
+  id,
+  participate,
+  localListingConfig,
+  setLocalListingConfig
+) {
+  return axios
+    .post("https://zusammenimzimmer.herokuapp.com/join", {
+      id,
+      add: participate,
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        const newConfig = { ...localListingConfig, joined: participate };
+        localStorage.setItem(id, JSON.stringify(newConfig));
+        return newConfig;
+      } else {
+        console.error("There was an error with the API request", res);
+      }
+    })
+    .then((newConfig) => {
+      setLocalListingConfig(newConfig);
+    })
+    .catch((err) => {
+      console.error("There was an error setting the participation status", err);
+    });
+}
